@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "finance-downloader"
+version = "0.1.0"
+description = "Comprehensive financial data downloader supporting multiple providers"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.0",
+    "pyarrow>=14.0",
+    "loguru>=0.7",
+    "pydantic>=2.0",
+    "requests>=2.31",
+    "yfinance>=0.2.30",
+    "fredapi>=0.5",
+    "finnhub-python>=2.4",
+    "tenacity>=8.0",
+]
+
+[project.optional-dependencies]
+eodhd = ["eodhd>=1.0.20"]
+databento = ["databento>=0.40"]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.4",
+]
+
+[project.scripts]
+finance-download = "finance_downloader.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
