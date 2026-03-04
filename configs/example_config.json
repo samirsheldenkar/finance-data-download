@@ -1,0 +1,49 @@
+{
+  "output_dir": "./data",
+  "storage_format": "parquet",
+  "log_level": "INFO",
+
+  "providers": {
+    "yahoo": {},
+    "fred": { "api_key_env": "FRED_API_KEY" },
+    "eodhd": { "api_key_env": "EODHD_API_KEY" },
+    "databento": { "api_key_env": "DATABENTO_API_KEY" },
+    "alpha_vantage": { "api_key_env": "ALPHAVANTAGE_API_KEY" },
+    "finnhub": { "api_key_env": "FINNHUB_API_KEY" },
+    "sec_edgar": {}
+  },
+
+  "jobs": [
+    {
+      "name": "us_equities_daily",
+      "provider": "yahoo",
+      "data_type": "eod_prices",
+      "symbols": ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA"],
+      "start_date": "2020-01-01",
+      "output_subdir": "equities/eod"
+    },
+    {
+      "name": "us_equity_dividends",
+      "provider": "yahoo",
+      "data_type": "dividends",
+      "symbols": ["AAPL", "MSFT", "JNJ", "KO", "PG"],
+      "start_date": "2015-01-01",
+      "output_subdir": "equities/dividends"
+    },
+    {
+      "name": "macro_fred",
+      "provider": "fred",
+      "data_type": "economic",
+      "symbols": ["GDP", "UNRATE", "CPIAUCSL", "DFF", "T10Y2Y", "DGS10"],
+      "output_subdir": "macro/fred"
+    },
+    {
+      "name": "sec_financials",
+      "provider": "sec_edgar",
+      "data_type": "filings",
+      "symbols": ["AAPL", "MSFT"],
+      "start_date": "2020-01-01",
+      "output_subdir": "fundamentals/sec"
+    }
+  ]
+}
