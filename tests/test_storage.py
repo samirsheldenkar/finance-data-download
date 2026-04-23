@@ -5,9 +5,6 @@ from __future__ import annotations
 from datetime import date
 
 import pandas as pd
-import pytest
-
-from finance_downloader.core.storage import DataStorage
 
 
 def test_write_and_read_parquet(storage, sample_eod_df):

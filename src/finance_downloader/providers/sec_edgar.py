@@ -8,7 +8,7 @@ from datetime import date
 import pandas as pd
 import requests
 from loguru import logger
-from tenacity import retry, stop_after_attempt, wait_exponential
+from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
 
 from finance_downloader.core.base_provider import BaseProvider
 from finance_downloader.core.models import DataType, DownloadJob, ProviderConfig
@@ -76,8 +76,15 @@ class SecEdgarProvider(BaseProvider):
             raise ValueError(f"Could not find CIK for ticker '{symbol}' in SEC database")
         return cik
 
-    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=10))
-    def download(self, job: DownloadJob, start_override: date | None = None) -> pd.DataFrame:
+    @retry(
+        retry=retry_if_exception_type((requests.RequestException, ConnectionError)),
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, max=10),
+        reraise=True,
+    )
+    def download(
+        self, job: DownloadJob, start_override: date | None = None
+    ) -> pd.DataFrame:
         symbol = job.symbols[0]
 
         if job.data_type == DataType.FILINGS:
