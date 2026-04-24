@@ -157,7 +157,12 @@ class AlphaVantageProvider(BaseProvider):
         # Response key varies by function
         data_key = None
         for key in data:
-            if key != "name" and key != "interval" and key != "unit" and isinstance(data[key], list):
+            if (
+                key != "name"
+                and key != "interval"
+                and key != "unit"
+                and isinstance(data[key], list)
+            ):
                 data_key = key
                 break
 

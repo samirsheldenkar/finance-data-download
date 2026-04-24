@@ -1,0 +1,33 @@
+# Integration Test Configuration
+# Copy to integration.yaml and fill in real API keys.
+# Run with: pytest tests/test_integration/ -v --timeout=120
+
+jobs:
+  - name: yahoo-eod-integration
+    provider: yahoo
+    data_type: eod_prices
+    symbols: ["AAPL"]
+    start_date: "2024-01-01"
+    end_date: "2024-01-31"
+
+  - name: fred-economic-integration
+    provider: fred
+    data_type: economic
+    symbols: ["GDP"]
+    start_date: "2024-01-01"
+
+providers:
+  fred:
+    api_key_env: FRED_API_KEY
+  eodhd:
+    api_key_env: EODHD_API_KEY
+  databento:
+    api_key_env: DATABENTO_API_KEY
+  alpha_vantage:
+    api_key_env: ALPHAVANTAGE_API_KEY
+  finnhub:
+    api_key_env: FINNHUB_API_KEY
+
+storage:
+  format: parquet
+  output_dir: ./test_output

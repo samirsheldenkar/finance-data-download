@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from datetime import date
-from unittest.mock import MagicMock
 
 import pandas as pd
 import pytest
 
+from finance_downloader.core.base_provider import BaseProvider
 from finance_downloader.core.models import (
     AppConfig,
     DataType,
@@ -15,7 +15,6 @@ from finance_downloader.core.models import (
     ProviderConfig,
     StorageFormat,
 )
-from finance_downloader.core.base_provider import BaseProvider
 from finance_downloader.core.registry import ProviderRegistry
 from finance_downloader.runner import DownloadRunner
 

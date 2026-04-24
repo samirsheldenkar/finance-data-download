@@ -32,5 +32,8 @@ def load_config(config_path: str | Path) -> AppConfig:
         logger.error(f"Invalid configuration: {e}")
         raise ValueError(f"Invalid configuration in {path}: {e}") from e
 
-    logger.info(f"Loaded config from {path}: {len(config.jobs)} jobs, {len(config.providers)} providers")
+    logger.info(
+        f"Loaded config from {path}: "
+        f"{len(config.jobs)} jobs, {len(config.providers)} providers"
+    )
     return config
